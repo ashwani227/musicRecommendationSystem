@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style type="text/css">
+    body{
+    	background-image: url(https://images3.alphacoders.com/250/25007.jpg);
+    }
+    </style>
+    <style>
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+#myInput {
+  border-box: box-sizing;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+  <div id="myDropdown" class="dropdown-content" style="width: 300px; height: 500px;">
+    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+    <select id="mySelect" style="height: 400px;">
+    <% for(var i=0;i< startingChoices.length;i++){ %>
+    <h4><option style="font-size: 18px;" value="<%= startingChoices[i].artistname %>"><%= startingChoices[i].artistname %>
+    </option></h4>
+    <% } %>
+    </select>
+  </div>
+</div>
+</div>
+<div class="col-md-6">
+<form action="firstchoices">
+  <input id="blah" type="text" name="initial" style="display: none;">
+<% for(var i=0;i< previousC.length;i++){ %>
+    <h4><option style="font-size: 18px;" value="<%= previousC[i] %>"><%= previousC[i] %></option></h4>
+    <% } %>  
+  <li id="addedArtist"></li>
+  <div style="margin-top: 100px;">
+  <h3> Choose Wildness Factor </h3>
+  <select name="wildness">
+    <option value="1"> 1 </option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+
+  </select>
+
+</div>
+    <button type="submit" class="btn btn-success" style="margin-left: 200px;">Go Ahead</button>
+</form>
+</div>
+</div>
+</div>
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+//Using search bar to select artist from available list of artists
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("option");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+//Adding artist to list when user click on certain artist and click add artist button
+function addArtist(){
+  var artistToAdd = document.getElementById("mySelect").value;
+  console.log(artistToAdd)
+  var artistAppend = document.createElement('option');
+  artistAppend.innerText = artistToAdd;
+  artistAppend.value = artistToAdd;
+   var ii = document.getElementById("addedArtist")
+    ii.appendChild(artistAppend)
+      var abc = [];
+      for(var i=0;i < ii.children.length;i++){
+        abc.push((ii.children)[i].value)
+      }
+      var tx = document.getElementById("blah");
+      tx.value = abc;
+}
+      document.getElementById("mySelect").multiple = true;
+     
+
+</script>
+
+<button onclick="addArtist()">Add to list</button>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script type="text/javascript">
+
+    	//Using YouTube api to show the video based on clicked artist
+    	function execute(value){
+    		
+    		const Http = new XMLHttpRequest();
+    		const url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+value+'&key=AIzaSyBx2_mYvJf-1GKPNULw663MHVauSuGW9gI';
+    		Http.open("GET",url);
+    		Http.send();
+    		Http.onreadystatechange = (e) =>{
+    			var data = JSON.parse(Http.responseText).items[0].id.videoId;
+    			var destination = "https://www.youtube.com/embed/"+data+"?autoplay=0";
+    			var ifr = document.getElementById("iframe");
+    			ifr.src = destination;
+				
+    		}
+    	}
+    </script>
+
+
+    <style type="text/css">
+    	
+    	.myclass1{
+    		background-color: #f1f1f1;
+    		background-image: url(http://icons.iconarchive.com/icons/marcus-roberto/google-play/256/Google-Play-Music-icon.png);
+    		text-align: center;
+    		background-size: 100%;
+    		font-size: 18px;
+    		font-weight: bold;
+    		color: #344259;
+    		width: 200px;
+    		height: 140px;
+    		margin: 10px;
+    	}
+
+    </style>
+</head>
+<body>
+  <div class="container">
+  	<div class="row">
+  	<div class="col-md-4">
+	<select size=100% onclick="execute(value)" style="overflow: auto;border:none;">
+	
+	<% for(var i=0;i< choices.length; i++){ %>
+	<option class="myclass1" id="artistSelected" value="<%= choices[i] %>"> <%= choices[i] %></option>
+	<% } %>
+
+</select>
+</div>
+<div class="col-md-4">
+	<iframe id="iframe" src="" style="height: 400px;"></iframe>
+</div>
+
+<div class="col-md-4">
+<select size=100% onclick="execute(value)" style="overflow: auto; border:none;">
+<%for(var i=0;i< res.length;i++){ %>
+  <option class="myclass1" id="artistSelected"value="<%= res[i] %>"><%= res[i] %></option>
+  <% } %>
+</select>
+</div>
+</div>
+</div>
+
+
+<h3><a href="editchoices" style="position: absolute; left: 600px; top: 600px;">Edit Choices</a>
+<a href="logout" style="position: absolute; right: 30px;top:100px;">Logout</a>
+</body>
+
+</html>
+
